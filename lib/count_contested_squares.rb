@@ -1,28 +1,21 @@
 class CountContestedSquares
   def execute(input)
-    claims = input[:claims]
+    all_squares = []
 
-    return 0 if claims.count < 2
+    input[:claims].each do |claim|
+      x_start = claim[:from_left]
+      y_start = claim[:from_top]
 
-    if overlap?(claims[0], claims[1])
-      1
-    else
-      0
+      claim[:width].times do |x|
+        claim[:height].times do |y|
+          square = [x_start + x, y_start + y]
+          all_squares << square
+        end
+      end
     end
-  end
 
-  def overlap?(one, two)
-    x_overlap?(one, two) &&
-    y_overlap?(one, two)
-  end
-
-  def x_overlap?(one, two)
-    one_range = one[:from_left]
-    two_range = two[:from_left]
-    one_range == two_range
-  end
-
-  def y_overlap?(one, two)
-    one[:from_top] == two[:from_top]
+    all_squares
+      .group_by(&:itself)
+      .count{ |_, value| value.count > 1 }
   end
 end

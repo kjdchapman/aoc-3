@@ -62,6 +62,33 @@ describe CountContestedSquares do
     it { is_expected.to eq 1 }
   end
 
+  context 'two claims, one taller, different start positions' do
+    let(:claims) do
+      [{ from_left: 0, from_top: 1, width: 1, height: 1 },
+      { from_left: 0, from_top: 0, width: 1, height: 2 }]
+    end
+
+    it { is_expected.to eq 1 }
+  end
+
+  context 'two claims with two overlaps' do
+    let(:claims) do
+      [{ from_left: 0, from_top: 1, width: 1, height: 3 },
+      { from_left: 0, from_top: 2, width: 1, height: 3 }]
+    end
+
+    it { is_expected.to eq 2 }
+  end
+
+  context 'three claims' do
+    let(:claims) do
+      [{ from_left: 0, from_top: 0, width: 1, height: 1 },
+      { from_left: 2, from_top: 2, width: 1, height: 1 },
+      { from_left: 2, from_top: 2, width: 1, height: 1 }]
+    end
+
+    it { is_expected.to eq 1 }
+  end
 end
 
 
